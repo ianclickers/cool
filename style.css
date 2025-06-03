@@ -1,131 +1,120 @@
-
 body {
-  background-color: #121212;
-  color: #ffffff;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background: #1e1e1e;
+  color: white;
   text-align: center;
   margin: 0;
-  padding: 20px;
+  padding: 0;
 }
-h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3em;
-  color: #00ff88;
-}
-#ian {
-  width: 150px;
-  border-radius: 50%;
-  transition: transform 0.1s ease;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
-}
-p {
-  font-size: 1.2em;
-}
-select {
-  font-size: 1em;
-  padding: 5px 10px;
-  background-color: #333;
-  color: white;
-  border: 1px solid #555;
-}
-.clicker-button {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1em;
-  margin: 8px;
-  padding: 12px 24px;
-  border-radius: 10px;
-  border: none;
-  color: white;
-  background-color: #444;
-  min-width: 200px;
-}
-.clicker-button:enabled {
-  background-color: green;
-  cursor: pointer;
-}
-.clicker-button:disabled {
-  background-color: grey;
-  cursor: not-allowed;
-}
-.rebirth {
-  font-size: 1.2em;
-  font-family: 'Orbitron', sans-serif;
-  padding: 15px 30px;
-  margin-top: 30px;
-  background-color: #ffaa00;
-  color: #000;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-}
-#clicks, #rebirths, #world {
-  font-weight: bold;
-  font-size: 1.3em;
-  color: #00ff88;
-}
-#planet-container {
+
+#menu {
   position: absolute;
   top: 10px;
-  right: 10px;
+  left: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
-#planet {
-  width: 100px;
-  height: 100px;
+
+#menu-button {
+  font-size: 24px;
+  cursor: pointer;
+}
+
+#username-display {
+  font-size: 16px;
+  cursor: pointer;
+  color: lightblue;
+}
+
+#menu-panel {
+  position: absolute;
+  top: 40px;
+  left: 10px;
+  background: #333;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#game-container {
+  margin-top: 60px;
+}
+
+#ian {
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
+  cursor: pointer;
+  transition: transform 0.1s;
 }
+
+#planet {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 100px;
+  opacity: 0.7;
+}
+
+.clicker-button {
+  display: block;
+  margin: 10px auto;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  transition: background 0.2s;
+}
+
+.clicker-button:disabled {
+  background: gray;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.clicker-button:not(:disabled) {
+  background: green;
+  color: white;
+  cursor: pointer;
+}
+
+#controls {
+  margin-top: 20px;
+}
+
 #offline-popup {
   position: fixed;
   top: 20px;
-  background: #222;
+  right: 20px;
+  background: #444;
   color: #fff;
-  padding: 15px;
-  border: 1px solid #00ff88;
-  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 6px;
+  z-index: 1000;
 }
-.hidden {
-  display: none;
-}
-#menu-button {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  font-size: 28px;
-  cursor: pointer;
-}
-#menu-panel {
-  position: fixed;
-  top: 50px;
-  left: 10px;
-  background: #222;
-  border: 1px solid #444;
-  padding: 10px;
-}
-#leaderboard-panel {
-  background: #222;
-  padding: 20px;
-  border: 2px solid #00ff88;
-}
-#login-modal {
+
+.modal {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-box {
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  border: 2px solid #00ff88;
-}
-.modal-box input {
-  display: block;
   width: 100%;
-  margin: 10px 0;
-  padding: 8px;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.modal-content {
+  background: white;
+  color: black;
+  padding: 20px;
+  margin: 15% auto;
+  width: 300px;
+  border-radius: 10px;
+}
+
+input {
+  display: block;
+  width: 90%;
+  padding: 10px;
+  margin: 10px auto;
+  border-radius: 5px;
 }

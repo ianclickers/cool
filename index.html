@@ -5,48 +5,47 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ian Clicker</title>
   <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <div id="menu-button">☰</div>
+  <div id="menu">
+    <span id="menu-button">☰</span>
+    <span id="username-display" onclick="toggleLogin()">Log In / Sign up</span>
+  </div>
   <div id="menu-panel" class="hidden">
     <button onclick="openLogin()">Log in or Create Account</button>
     <button onclick="showLeaderboard()">Leaderboard</button>
+    <button id="logout-btn" class="hidden" onclick="logout()">Logout</button>
   </div>
-
-  <h1>Ian Clicker</h1>
-  <div id="planet-container">
-    <img id="planet" src="world1.png" alt="Planet"/>
-  </div>
-  <div>
-    <img id="ian" src="ian.png" alt="Ian" />
-  </div>
-  <p>Clicks: <span id="clicks">0</span></p>
-  <p>Rebirths: <span id="rebirths">0</span></p>
-  <p>World: <span id="world">1</span></p>
-
-  <div>
-    <label for="buyAmount">Buy Amount:</label>
-    <select id="buyAmount">
-      <option value="1">x1</option>
-      <option value="5">x5</option>
-      <option value="10">x10</option>
-      <option value="20">x20</option>
-    </select>
-  </div>
-
-  <div id="clickerButtons"></div>
-  <button class="rebirth" onclick="rebirth()">Rebirth (100,000 Clicks)</button>
 
   <div id="offline-popup" class="hidden"></div>
-  <div id="leaderboard-panel" class="hidden"></div>
-  <div id="login-modal" class="hidden">
-    <div class="modal-box">
-      <h2>Log In / Create Account</h2>
+
+  <div id="game-container">
+    <img id="planet" src="world1.png" alt="Planet" />
+    <div id="stats">
+      <p>Clicks: <span id="clicks">0</span></p>
+      <p>Rebirths: <span id="rebirths">0</span></p>
+      <p>World: <span id="world">1</span></p>
+    </div>
+    <img id="ian" src="ian.png" alt="Click Ian" />
+    <div id="clickerButtons"></div>
+    <div id="controls">
+      <select id="buyAmount">
+        <option value="1">Buy 1</option>
+        <option value="5">Buy 5</option>
+        <option value="10">Buy 10</option>
+        <option value="20">Buy 20</option>
+      </select>
+      <button onclick="rebirth()">Rebirth</button>
+    </div>
+  </div>
+
+  <div id="login-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Login or Create Account</h3>
       <input type="text" id="username" placeholder="Username" />
       <input type="password" id="password" placeholder="Password" />
       <button onclick="login()">Submit</button>
-      <button onclick="closeLogin()">Cancel</button>
+      <button onclick="closeLogin()">Close</button>
     </div>
   </div>
 
