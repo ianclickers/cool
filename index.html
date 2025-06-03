@@ -2,50 +2,30 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ian Clicker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="menu">
-    <span id="menu-button">☰</span>
-    <span id="username-display" onclick="toggleLogin()">Log In / Sign up</span>
-  </div>
-  <div id="menu-panel" class="hidden">
-    <button onclick="openLogin()">Log in or Create Account</button>
-    <button onclick="showLeaderboard()">Leaderboard</button>
-    <button id="logout-btn" class="hidden" onclick="logout()">Logout</button>
+    <button id="loginStatus" onclick="toggleLogin()">Log In / Sign Up</button>
+    <span id="usernameDisplay"></span>
   </div>
 
-  <div id="offline-popup" class="hidden"></div>
-
-  <div id="game-container">
-    <img id="planet" src="world1.png" alt="Planet" />
-    <div id="stats">
-      <p>Clicks: <span id="clicks">0</span></p>
-      <p>Rebirths: <span id="rebirths">0</span></p>
-      <p>World: <span id="world">1</span></p>
-    </div>
-    <img id="ian" src="ian.png" alt="Click Ian" />
-    <div id="clickerButtons"></div>
-    <div id="controls">
-      <select id="buyAmount">
-        <option value="1">Buy 1</option>
-        <option value="5">Buy 5</option>
-        <option value="10">Buy 10</option>
-        <option value="20">Buy 20</option>
-      </select>
-      <button onclick="rebirth()">Rebirth</button>
-    </div>
+  <div id="game">
+    <img id="ian" src="ian.png" alt="Ian" />
+    <p id="clicksDisplay">Clicks: 0</p>
+    <button onclick="addClick()">Click Me</button>
   </div>
 
-  <div id="login-modal" class="modal hidden">
+  <div id="loginGUI" class="modal hidden">
     <div class="modal-content">
-      <h3>Login or Create Account</h3>
-      <input type="text" id="username" placeholder="Username" />
-      <input type="password" id="password" placeholder="Password" />
-      <button onclick="login()">Submit</button>
-      <button onclick="closeLogin()">Close</button>
+      <h2>Login / Sign Up</h2>
+      <input id="usernameInput" placeholder="Username" />
+      <input id="passwordInput" placeholder="Password" type="password" />
+      <button onclick="login()">Login</button>
+      <button onclick="signUp()">Sign Up</button>
+      <button onclick="logout()">Logout</button>
     </div>
   </div>
 
