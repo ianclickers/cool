@@ -93,8 +93,7 @@ function buyClicker(index) {
 
 document.getElementById("ian").addEventListener("click", () => {
   clicks += 1 + rebirths * 0.1;
-  const ian = document.getElementById("ian");
-  ian.style.transform = `translate(${Math.random() * 10 - 5}px, ${Math.random() * 10 - 5}px)`;
+  
   updateDisplay();
 });
 
