@@ -2,257 +2,143 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Ian Clicker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&display=swap" rel="stylesheet">
-  <style>
-    body {
-      font-family: 'Orbitron', sans-serif;
-      margin: 0;
-      display: flex;
-      height: 100vh;
-      overflow: hidden;
-    }
-    .left, .right {
-      flex: 1;
-      padding: 20px;
-      box-sizing: border-box;
-    }
-    .left {
-      background-color: #e0f7fa;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-    }
-    .right {
-      background-color: #f1f8e9;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    .world2.left {
-      background-color: #ffebee;
-    }
-    .world2.right {
-      background-color: #fce4ec;
-    }
-    #clicker-img {
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      border: 5px solid #444;
-      cursor: pointer;
-      transition: transform 0.1s;
-    }
-    #clicker-img:active {
-      transform: scale(0.95);
-    }
-    #counter {
-      margin-top: 20px;
-      font-size: 28px;
-    }
-    button {
-      padding: 12px 18px;
-      font-size: 18px;
-      cursor: pointer;
-      border: none;
-      color: white;
-      transition: background-color 0.3s;
-    }
-    button:disabled {
-      cursor: not-allowed;
-      color: #ccc;
-    }
-    .upgrade {
-      background-color: #4caf50;
-    }
-    .upgrade.world2 {
-      background-color: #e53935;
-    }
-    #rebirth-btn {
-      background-color: #f44336;
-    }
-    #rebirth-btn:disabled {
-      background-color: grey;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="left world1">
-    <img id="clicker-img" src="ian.png" alt="Ian">
-    <div id="counter">Clicks: 0</div>
-    <div id="rebirths">Rebirths: 0</div>
-    <div id="world">World: 1</div>
-    <button id="rebirth-btn" onclick="rebirth()">Rebirth</button>
+  <h1>Ian Clicker</h1>
+
+  <div>
+    <img id="ian" src="ian.png" alt="Ian">
   </div>
 
-  <div class="right world1">
-    <button class="upgrade world1" id="upgrade-1" onclick="buyUpgrade(1)">Buy Auto Clicker (+2)</button>
-    <button class="upgrade world1" id="upgrade-2" onclick="buyUpgrade(2)">Buy Ian Factory (+15)</button>
-    <button class="upgrade world1" id="upgrade-3" onclick="buyUpgrade(3)">Buy Ian AI (+30)</button>
+  <p>Clicks: <span id="clicks">0</span></p>
+  <p>Rebirths: <span id="rebirths">0</span></p>
+  <p>World: <span id="world">1</span></p>
+
+  <div>
+    <label for="buyAmount">Buy Amount:</label>
+    <select id="buyAmount">
+      <option value="1">x1</option>
+      <option value="5">x5</option>
+      <option value="10">x10</option>
+      <option value="20">x20</option>
+    </select>
   </div>
+
+  <div id="clickerButtons"></div>
+
+  <button class="rebirth" onclick="rebirth()">Rebirth (100,000 Clicks)</button>
 
   <script>
-    let clicks = parseInt(localStorage.getItem("clicks")) || 0;
-    let upgrades = JSON.parse(localStorage.getItem("upgrades")) || { 1: 0, 2: 0, 3: 0 };
-    let lastSaved = parseInt(localStorage.getItem("lastSaved")) || Date.now();
-    let rebirths = Math.min(parseInt(localStorage.getItem("rebirths")) || 0, 1000);
-    let world = parseInt(localStorage.getItem("world")) || 1;
-    let buyMultiplier = 1;
+    const clickDisplay = document.getElementById('clicks');
+    const rebirthDisplay = document.getElementById('rebirths');
+    const worldDisplay = document.getElementById('world');
+    const ian = document.getElementById('ian');
+    const buyAmountSelector = document.getElementById('buyAmount');
+    const clickerButtonsDiv = document.getElementById('clickerButtons');
 
-    const counter = document.getElementById("counter");
-    const rebirthDisplay = document.getElementById("rebirths");
-    const worldDisplay = document.getElementById("world");
-    const rebirthBtn = document.getElementById("rebirth-btn");
-    const upgradeButtons = document.querySelectorAll(".upgrade");
-    const img = document.getElementById("clicker-img");
-    const buyControls = document.createElement('div');
+    let clicks = 0;
+    let rebirths = 0;
+    let world = 1;
+    let clickerCounts = [0, 0, 0];
+    let clickerPrices = [10, 100, 1000];
 
-    buyControls.innerHTML = `
-      <label style="font-weight: bold;">Buy x:</label>
-      <select id="buy-multiplier" style="margin-left: 10px; padding: 4px;">
-        <option value="1">1x</option>
-        <option value="5">5x</option>
-        <option value="10">10x</option>
-        <option value="20">20x</option>
-      </select>
-    `;
-    document.querySelector(".right").prepend(buyControls);
-    document.getElementById("buy-multiplier").addEventListener("change", (e) => {
-      buyMultiplier = parseInt(e.target.value);
-      updateDisplay();
-    });
+    const worldClickerNames = {
+      1: ["Ian Helper", "Ian Miner", "Ian Robot"],
+      2: ["Ian Alien", "Ian Spaceship", "Ian UFO"]
+    };
 
-    function updateDisplay() {
-      counter.textContent = `Clicks: ${Math.floor(clicks)}`;
-      rebirthDisplay.textContent = `Rebirths: ${rebirths}`;
-      worldDisplay.textContent = `World: ${world}`;
+    function saveGame() {
+      localStorage.setItem('ianClickerSave', JSON.stringify({
+        clicks, rebirths, world, clickerCounts, clickerPrices
+      }));
+    }
 
-      rebirthBtn.disabled = clicks < 100000;
-      rebirthBtn.style.backgroundColor = clicks >= 100000 ? "#f44336" : "grey";
-
-      [1, 2, 3].forEach(type => {
-        const btn = document.querySelector(`#upgrade-${type}`);
-        const cost = getUpgradeCost(type, buyMultiplier);
-        if (clicks >= cost) {
-          btn.disabled = false;
-          btn.style.backgroundColor = world === 2 ? "#e53935" : "#4caf50";
-        } else {
-          btn.disabled = true;
-          btn.style.backgroundColor = "grey";
-        }
-        btn.textContent = `${getUpgradeName(type)} (x${buyMultiplier}) - ${cost} clicks`;
-      });
-
-      if (clicks >= 1000000 && world === 1) {
-        world = 2;
-        localStorage.setItem("world", world);
-        applyTheme();
-        alert("🌍 You've unlocked World 2! Everything is now RED.");
+    function loadGame() {
+      const data = JSON.parse(localStorage.getItem('ianClickerSave'));
+      if (data) {
+        clicks = data.clicks || 0;
+        rebirths = data.rebirths || 0;
+        world = data.world || 1;
+        clickerCounts = data.clickerCounts || [0, 0, 0];
+        clickerPrices = data.clickerPrices || [10, 100, 1000];
       }
     }
 
-    function getUpgradeName(type) {
-      return {
-        1: "Buy Auto Clicker (+2)",
-        2: "Buy Ian Factory (+15)",
-        3: "Buy Ian AI (+30)"
-      }[type];
+    function updateUI() {
+      clickDisplay.textContent = Math.floor(clicks);
+      rebirthDisplay.textContent = rebirths;
+      worldDisplay.textContent = world;
+      clickerButtonsDiv.innerHTML = '';
+
+      worldClickerNames[world].forEach((name, i) => {
+        const btn = document.createElement('button');
+        const amount = parseInt(buyAmountSelector.value);
+        let price = 0;
+        for (let j = 0; j < amount; j++) {
+          price += clickerPrices[i] * 2 ** j;
+        }
+
+        btn.textContent = `${name} (${clickerCounts[i]}) - ${price} clicks`;
+        btn.className = "clicker-button";
+        btn.disabled = clicks < price;
+        btn.style.backgroundColor = clicks >= price ? 'green' : 'grey';
+        btn.onclick = () => buyClicker(i, amount);
+        clickerButtonsDiv.appendChild(btn);
+      });
     }
 
-    function getUpgradeCost(type, mult) {
-      const baseCosts = { 1: 10, 2: 100, 3: 500 };
-      return baseCosts[type] * mult;
-    }
+    function buyClicker(index, amount) {
+      let price = 0;
+      for (let i = 0; i < amount; i++) {
+        price += clickerPrices[index] * 2 ** i;
+      }
 
-    function buyUpgrade(type) {
-      const cost = getUpgradeCost(type, buyMultiplier);
-      if (clicks >= cost) {
-        clicks -= cost;
-        upgrades[type] += buyMultiplier;
-        updateDisplay();
+      if (clicks >= price) {
+        clicks -= price;
+        clickerCounts[index] += amount;
+        clickerPrices[index] *= 2 ** amount;
+        updateUI();
         saveGame();
       }
     }
 
-    function saveGame() {
-      localStorage.setItem("clicks", clicks);
-      localStorage.setItem("upgrades", JSON.stringify(upgrades));
-      localStorage.setItem("lastSaved", Date.now());
-      localStorage.setItem("rebirths", rebirths);
-      localStorage.setItem("world", world);
-    }
-
-    function getFarmRate() {
-      const base = upgrades[1] * 2 + upgrades[2] * 15 + upgrades[3] * 30;
-      return base * (1 + rebirths * 0.5);
-    }
-
-    function applyAutoClicks() {
-      let total = getFarmRate();
-      let added = 0;
-      const step = setInterval(() => {
-        if (added >= total) {
-          clearInterval(step);
-        } else {
-          clicks++;
-          added++;
-          updateDisplay();
-        }
-      }, 5);
-    }
-
-    function applyOfflineProgress() {
-      const now = Date.now();
-      const seconds = Math.floor((now - lastSaved) / 1000);
-      const earned = getFarmRate() * seconds;
-      if (earned > 0) {
-        clicks += earned;
-        alert(`You earned ${Math.floor(earned)} clicks while away!`);
-      }
-    }
-
     function rebirth() {
-      if (clicks >= 100000 && rebirths < 1000) {
-        if (confirm(`Rebirth will reset clicks and upgrades, but make auto farming faster (x${1 + (rebirths + 1) * 0.5})! Proceed?`)) {
-          clicks = 0;
-          upgrades = { 1: 0, 2: 0, 3: 0 };
-          rebirths++;
-          updateDisplay();
-          saveGame();
-        }
+      if (clicks >= 100000) {
+        rebirths++;
+        clicks = 0;
+        world = world === 1 ? 2 : 1;
+        clickerCounts = [0, 0, 0];
+        clickerPrices = [10, 100, 1000];
+        updateUI();
+        saveGame();
       }
     }
 
-    img.addEventListener("click", () => {
-      clicks++;
-      updateDisplay();
-      saveGame();
-    });
-
-    function applyTheme() {
-      const theme = world === 2 ? 'world2' : 'world1';
-      const other = world === 2 ? 'world1' : 'world2';
-
-      document.body.classList.remove(other);
-      document.querySelector('.left').classList.remove(other);
-      document.querySelector('.right').classList.remove(other);
-      img.classList.remove(other);
-      rebirthBtn.classList.remove(other);
-      upgradeButtons.forEach(btn => btn.classList.remove(other));
-
-      document.body.classList.add(theme);
-      document.querySelector('.left').classList.add(theme);
-      document.querySelector('.right').classList.add(theme);
-      img.classList.add(theme);
-      rebirthBtn.classList.add(theme);
-      upgradeButtons.forEach(btn => btn.classList.add(theme));
+    function tick() {
+      let cps = 0;
+      clickerCounts.forEach((count, i) => {
+        cps += count * (1 + rebirths); // Each clicker stronger with rebirths
+      });
+      clicks += cps / 10;
+      updateUI();
     }
 
-    applyOfflineProgress();
-    applyTheme();
-    updateDisplay();
-    setInterval(applyAutoClicks, 1000);
+    ian.onclick = () => {
+      clicks += 1 + rebirths;
+      const x = Math.random() * 10 - 5;
+      const y = Math.random() * 10 - 5;
+      ian.style.transform = `translate(${x}px, ${y}px)`;
+      updateUI();
+      saveGame();
+    };
+
+    loadGame();
+    updateUI();
+    setInterval(tick, 100); // 10 times per second
   </script>
 </body>
 </html>
