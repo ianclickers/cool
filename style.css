@@ -1,0 +1,89 @@
+/* General page styles */
+body {
+  background-color: #121212;
+  color: #ffffff;
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3em;
+  margin-bottom: 10px;
+  color: #00ff88;
+}
+
+#ian {
+  width: 150px;
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+  cursor: pointer;
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+}
+
+/* Click and stat displays */
+p {
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+select {
+  font-size: 1em;
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: #333;
+  color: white;
+  border: 1px solid #555;
+}
+
+/* Clicker buttons */
+.clicker-button {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1em;
+  margin: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  background-color: #444;
+  transition: background-color 0.2s ease;
+  min-width: 200px;
+}
+
+.clicker-button:enabled {
+  background-color: #00aa88;
+  cursor: pointer;
+}
+
+.clicker-button:disabled {
+  background-color: #555;
+  cursor: not-allowed;
+}
+
+/* Rebirth button */
+.rebirth {
+  font-size: 1.2em;
+  font-family: 'Orbitron', sans-serif;
+  padding: 15px 30px;
+  margin-top: 30px;
+  background-color: #ffaa00;
+  color: #000;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 10px #ffaa00;
+  transition: background-color 0.2s ease;
+}
+
+.rebirth:hover {
+  background-color: #ffcc44;
+}
+
+/* World and stats display */
+#clicks, #rebirths, #world {
+  font-weight: bold;
+  font-size: 1.3em;
+  color: #00ff88;
+}
