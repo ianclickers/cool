@@ -122,7 +122,7 @@ setInterval(() => {
 
 setInterval(saveGame, 5000);
 
-// Basic Login System (No server backend â localStorage only)
+// Basic Login System (No server backend — localStorage only)
 function login() {
   const username = document.getElementById("username").value.trim();
   const password = document.getElementById("password").value.trim();
@@ -178,4 +178,3 @@ function showLeaderboard() {
 }
 
 window.onload = loadGame;
-
