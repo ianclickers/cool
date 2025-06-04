@@ -1,14 +1,14 @@
-/* General page styles */Add commentMore actions
-
+/* General page styles */
 body {
   background-color: #121212;
   color: #ffffff;
-@@ -7,38 +7,28 @@ body {
+  font-family: 'Roboto', sans-serif;
+  text-align: center;
   margin: 0;
   padding: 20px;
 }
 
-h1 {Add commentMore actions
+h1 {
   font-family: 'Orbitron', sans-serif;
   font-size: 3em;
   margin-bottom: 10px;
@@ -42,7 +42,9 @@ select {
 .clicker-button {
   font-family: 'Orbitron', sans-serif;
   font-size: 1em;
-@@ -48,21 +38,16 @@ select {
+  margin: 8px;
+  padding: 12px 24px;
+  border-radius: 10px;
   border: none;
   color: white;
   background-color: #444;
@@ -52,13 +54,11 @@ select {
 
 .clicker-button:enabled {
   background-color: #00aa88;
-  background-color: green;
   cursor: pointer;
 }
 
 .clicker-button:disabled {
   background-color: #555;
-  background-color: grey;
   cursor: not-allowed;
 }
 
@@ -66,7 +66,10 @@ select {
 .rebirth {
   font-size: 1.2em;
   font-family: 'Orbitron', sans-serif;
-@@ -73,17 +58,74 @@ select {
+  padding: 15px 30px;
+  margin-top: 30px;
+  background-color: #ffaa00;
+  color: #000;
   border-radius: 10px;
   border: none;
   cursor: pointer;
@@ -83,69 +86,4 @@ select {
   font-weight: bold;
   font-size: 1.3em;
   color: #00ff88;
-}
-#planet-container {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-}
-#planet {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
-#offline-popup {
-  position: fixed;
-  top: 20px;
-  background: #222;
-  color: #fff;
-  padding: 15px;
-  border: 1px solid #00ff88;
-  display: inline-block;
-}
-.hidden {
-  display: none;
-}
-#menu-button {
-  position: fixed;
-  top: 10px;
-  left: 10px;
-  font-size: 28px;
-  cursor: pointer;
-}
-#menu-panel {
-  position: fixed;
-  top: 50px;
-  left: 10px;
-  background: #222;
-  border: 1px solid #444;
-  padding: 10px;
-}
-#leaderboard-panel {
-  background: #222;
-  padding: 20px;
-  border: 2px solid #00ff88;
-}
-#login-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.modal-box {
-  background: #222;
-  padding: 30px;
-  border-radius: 10px;
-  border: 2px solid #00ff88;
-}
-.modal-box input {
-  display: block;
-  width: 100%;
-  margin: 10px 0;
-  padding: 8px;
 }
