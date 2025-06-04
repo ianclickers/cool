@@ -1,89 +1,77 @@
-/* General page styles */
 body {
-  background-color: #121212;
-  color: #ffffff;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f5f5f5;
   text-align: center;
   margin: 0;
   padding: 20px;
 }
 
-h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 3em;
-  margin-bottom: 10px;
-  color: #00ff88;
+#game-container {
+  max-width: 600px;
+  margin: 0 auto;
 }
 
-#ian {
-  width: 150px;
+#click-area {
+  width: 200px;
+  height: 200px;
+  border: 8px solid #000;
   border-radius: 50%;
-  transition: transform 0.1s ease;
-  cursor: pointer;
-  box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+  overflow: hidden;
+  margin: 20px auto;
 }
 
-/* Click and stat displays */
-p {
-  font-size: 1.2em;
+#ian-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: pointer;
+}
+
+#info {
   margin: 10px 0;
+  font-size: 1.2em;
 }
 
-select {
+#buy-multiplier button {
+  margin: 5px;
+  padding: 5px 15px;
   font-size: 1em;
-  padding: 5px 10px;
-  border-radius: 5px;
-  background-color: #333;
-  color: white;
-  border: 1px solid #555;
 }
 
-/* Clicker buttons */
-.clicker-button {
-  font-family: 'Orbitron', sans-serif;
+#upgrades {
+  margin-top: 20px;
+}
+
+#upgrades button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 15px;
   font-size: 1em;
-  margin: 8px;
-  padding: 12px 24px;
-  border-radius: 10px;
+  width: 80%;
   border: none;
-  color: white;
-  background-color: #444;
-  transition: background-color 0.2s ease;
-  min-width: 200px;
+  border-radius: 5px;
+  transition: 0.2s;
 }
 
-.clicker-button:enabled {
-  background-color: #00aa88;
-  cursor: pointer;
-}
-
-.clicker-button:disabled {
-  background-color: #555;
+button:disabled {
+  background-color: #ccc;
+  color: #666;
   cursor: not-allowed;
 }
 
-/* Rebirth button */
-.rebirth {
-  font-size: 1.2em;
-  font-family: 'Orbitron', sans-serif;
-  padding: 15px 30px;
-  margin-top: 30px;
-  background-color: #ffaa00;
-  color: #000;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 0 10px #ffaa00;
-  transition: background-color 0.2s ease;
+body.world1 #upgrades button:enabled {
+  background-color: #28a745;
+  color: white;
 }
 
-.rebirth:hover {
-  background-color: #ffcc44;
+body.world2 #upgrades button:enabled {
+  background-color: #dc3545;
+  color: white;
 }
 
-/* World and stats display */
-#clicks, #rebirths, #world {
-  font-weight: bold;
-  font-size: 1.3em;
-  color: #00ff88;
+#rebirth-btn,
+#switch-world {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 1em;
 }
