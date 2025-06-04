@@ -1,144 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
   <title>Ian Clicker</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron&family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
-  <h1>Ian Clicker</h1>
-
-  <div>
-    <img id="ian" src="ian.png" alt="Ian">
+<body class="world1">
+  <div id="game-container">
+    <div id="click-area">
+      <img src="Ian.png" alt="Ian" id="ian-img" onclick="handleClick()" />
+    </div>
+    <div id="info">
+      <h1>Ian Clicker</h1>
+      <div id="clicks">Clicks: 0</div>
+      <div id="rebirths">Rebirths W1: 0 | W2: 0</div>
+    </div>
+    <div id="buy-multiplier">
+      <button onclick="setMultiplier(1)">1x</button>
+      <button onclick="setMultiplier(5)">5x</button>
+      <button onclick="setMultiplier(10)">10x</button>
+      <button onclick="setMultiplier(20)">20x</button>
+    </div>
+    <div id="upgrades"></div>
+    <button id="rebirth-btn" onclick="rebirth()">Rebirth (100,000)</button>
+    <button id="switch-world" onclick="switchWorld()">Switch World</button>
   </div>
 
-  <p>Clicks: <span id="clicks">0</span></p>
-  <p>Rebirths: <span id="rebirths">0</span></p>
-  <p>World: <span id="world">1</span></p>
+  <div id="offline-popup" class="hidden"></div>
 
-  <div>
-    <label for="buyAmount">Buy Amount:</label>
-    <select id="buyAmount">
-      <option value="1">x1</option>
-      <option value="5">x5</option>
-      <option value="10">x10</option>
-      <option value="20">x20</option>
-    </select>
-  </div>
-
-  <div id="clickerButtons"></div>
-
-  <button class="rebirth" onclick="rebirth()">Rebirth (100,000 Clicks)</button>
-
-  <script>
-    const clickDisplay = document.getElementById('clicks');
-    const rebirthDisplay = document.getElementById('rebirths');
-    const worldDisplay = document.getElementById('world');
-    const ian = document.getElementById('ian');
-    const buyAmountSelector = document.getElementById('buyAmount');
-    const clickerButtonsDiv = document.getElementById('clickerButtons');
-
-    let clicks = 0;
-    let rebirths = 0;
-    let world = 1;
-    let clickerCounts = [0, 0, 0];
-    let clickerPrices = [10, 100, 1000];
-
-    const worldClickerNames = {
-      1: ["Ian Helper", "Ian Miner", "Ian Robot"],
-      2: ["Ian Alien", "Ian Spaceship", "Ian UFO"]
-    };
-
-    function saveGame() {
-      localStorage.setItem('ianClickerSave', JSON.stringify({
-        clicks, rebirths, world, clickerCounts, clickerPrices
-      }));
-    }
-
-    function loadGame() {
-      const data = JSON.parse(localStorage.getItem('ianClickerSave'));
-      if (data) {
-        clicks = data.clicks || 0;
-        rebirths = data.rebirths || 0;
-        world = data.world || 1;
-        clickerCounts = data.clickerCounts || [0, 0, 0];
-        clickerPrices = data.clickerPrices || [10, 100, 1000];
-      }
-    }
-
-    function updateUI() {
-      clickDisplay.textContent = Math.floor(clicks);
-      rebirthDisplay.textContent = rebirths;
-      worldDisplay.textContent = world;
-      clickerButtonsDiv.innerHTML = '';
-
-      worldClickerNames[world].forEach((name, i) => {
-        const btn = document.createElement('button');
-        const amount = parseInt(buyAmountSelector.value);
-        let price = 0;
-        for (let j = 0; j < amount; j++) {
-          price += clickerPrices[i] * 2 ** j;
-        }
-
-        btn.textContent = `${name} (${clickerCounts[i]}) - ${price} clicks`;
-        btn.className = "clicker-button";
-        btn.disabled = clicks < price;
-        btn.style.backgroundColor = clicks >= price ? 'green' : 'grey';
-        btn.onclick = () => buyClicker(i, amount);
-        clickerButtonsDiv.appendChild(btn);
-      });
-    }
-
-    function buyClicker(index, amount) {
-      let price = 0;
-      for (let i = 0; i < amount; i++) {
-        price += clickerPrices[index] * 2 ** i;
-      }
-
-      if (clicks >= price) {
-        clicks -= price;
-        clickerCounts[index] += amount;
-        clickerPrices[index] *= 2 ** amount;
-        updateUI();
-        saveGame();
-      }
-    }
-
-    function rebirth() {
-      if (clicks >= 100000) {
-        rebirths++;
-        clicks = 0;
-        world = world === 1 ? 2 : 1;
-        clickerCounts = [0, 0, 0];
-        clickerPrices = [10, 100, 1000];
-        updateUI();
-        saveGame();
-      }
-    }
-
-    function tick() {
-      let cps = 0;
-      clickerCounts.forEach((count, i) => {
-        cps += count * (1 + rebirths); // Each clicker stronger with rebirths
-      });
-      clicks += cps / 10;
-      updateUI();
-    }
-
-    ian.onclick = () => {
-      clicks += 1 + rebirths;
-      const x = Math.random() * 10 - 5;
-      const y = Math.random() * 10 - 5;
-      ian.style.transform = `translate(${x}px, ${y}px)`;
-      updateUI();
-      saveGame();
-    };
-
-    loadGame();
-    updateUI();
-    setInterval(tick, 100); // 10 times per second
-  </script>
+  <script src="game.js"></script>
 </body>
 </html>
