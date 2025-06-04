@@ -1,6 +1,6 @@
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f5f5;
+  background: #f2f2f2;
   text-align: center;
   margin: 0;
   padding: 20px;
@@ -8,13 +8,13 @@ body {
 
 #game-container {
   max-width: 600px;
-  margin: 0 auto;
+  margin: auto;
 }
 
 #click-area {
   width: 200px;
   height: 200px;
-  border: 8px solid #000;
+  border: 6px solid black;
   border-radius: 50%;
   overflow: hidden;
   margin: 20px auto;
@@ -34,44 +34,52 @@ body {
 
 #buy-multiplier button {
   margin: 5px;
-  padding: 5px 15px;
-  font-size: 1em;
-}
-
-#upgrades {
-  margin-top: 20px;
+  padding: 6px 12px;
 }
 
 #upgrades button {
   display: block;
   margin: 10px auto;
-  padding: 10px 15px;
-  font-size: 1em;
+  padding: 10px;
   width: 80%;
+  font-size: 1em;
   border: none;
-  border-radius: 5px;
-  transition: 0.2s;
+  border-radius: 4px;
 }
 
 button:disabled {
-  background-color: #ccc;
-  color: #666;
-  cursor: not-allowed;
+  background: #ccc;
+  color: #555;
 }
 
-body.world1 #upgrades button:enabled {
-  background-color: #28a745;
+.world1 #upgrades button:enabled {
+  background: green;
   color: white;
 }
 
-body.world2 #upgrades button:enabled {
-  background-color: #dc3545;
+.world2 #upgrades button:enabled {
+  background: red;
   color: white;
 }
 
-#rebirth-btn,
-#switch-world {
+#rebirth-btn, #switch-world {
   margin-top: 20px;
-  padding: 10px 20px;
+  padding: 10px 15px;
   font-size: 1em;
+}
+
+#offline-popup {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #222;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  z-index: 1000;
+}
+
+.hidden {
+  display: none;
 }
